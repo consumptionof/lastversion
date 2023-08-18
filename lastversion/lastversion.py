@@ -15,6 +15,7 @@ import json
 import logging
 import os
 import re
+import shutil
 import sys
 from os.path import expanduser
 
@@ -381,7 +382,8 @@ def install_app_image(url, install_name):
     app_file_name = os.path.join(apps_dir, install_name)
 
     Path(apps_dir).mkdir(exist_ok=True, parents=True)
-    download_file(url, app_file_name)
+    downloaded_file = download_file(url, app_file_name)
+    shutil.move(downloaded_file, app_file_name)
     os.chmod(app_file_name, 0o755)  # skipcq: BAN-B103
     extract_appimage_desktop_file(app_file_name)
 
